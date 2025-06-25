@@ -2,7 +2,7 @@
 
 📅 **Course Dates:** 30 June – 2 July 2025  
 🌍 **Mode:** Online, International Participation  
-⏱️ **Duration:** 3 Days, 10 hours/day  
+⏱️ **Duration:** 3 Days  
 📂 **Repository Contents:** Full course materials (slides, code, exercises, reports)
 
 ---
