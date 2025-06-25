@@ -1,0 +1,61 @@
+
+---
+title: "Day 3 - Interactive Visualizations and Reporting"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(plotly)
+library(shiny)
+```
+
+# Session 1: Static to Interactive with plotly (2h)
+
+- `ggplotly()` from static ggplot2 plots
+- Interactive legends, zoom, tooltips
+
+```{r}
+p <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species))
+ggplotly(p)
+```
+
+# Session 2: Interactive Dashboards with Shiny (3h)
+
+- Shiny UI and Server basics
+- Inputs (selectInput, sliderInput), Outputs (renderPlot, renderTable)
+- Building a reactive dashboard
+
+```{r, eval=FALSE}
+shinyApp(
+  ui = fluidPage(
+    selectInput("species", "Select Species", choices = unique(penguins$species)),
+    plotOutput("plot")
+  ),
+  server = function(input, output) {
+    output$plot <- renderPlot({
+      ggplot(filter(penguins, species == input$species), aes(x = body_mass_g)) +
+        geom_histogram()
+    })
+  }
+)
+```
+
+# Exercises (2h)
+
+- Build a dashboard for penguin dataset exploration
+- Add reactivity and custom themes
+
+# Session 3: R Markdown and HTML Reporting (2h)
+
+- Create reports with `rmarkdown::render()`
+- Embed plots, tables, and parameterized reports
+- Export HTML and PDF
+
+# Session 4: Reproducibility and GitHub (1h)
+
+- Version control with git
+- Using GitHub for collaboration
+- Best practices: scripts, reports, documentation
+
