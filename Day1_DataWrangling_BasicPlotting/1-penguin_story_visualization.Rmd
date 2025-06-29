@@ -9,6 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(janitor)
 library(lubridate)
+setwd("~/DataViz-R-Course")
 ```
 
 # Meet the Penguins
@@ -21,16 +22,11 @@ This project explores their story through tidy data and reproducible R code.
 penguins_raw <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/penguins_raw.csv") |> clean_names()
 
 head(penguins_raw)
-
-![Penguins Species](images/penguins.png)
-
-![Penguin Body](images/penguins_body.png)
-
 ```
 
-![Penguins Species](images/penguins.png)
+!["Penguin Body"](../images/penguins.png)
 
-![Penguin Body](images/penguins_body.png)
+!["Penguins Species"](../images/penguins_body.png)
 
 # Cleaning the Data
 
