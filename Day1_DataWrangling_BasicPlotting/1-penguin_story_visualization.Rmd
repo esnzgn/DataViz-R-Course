@@ -1,7 +1,9 @@
 ---
-title: "Penguin Story: A Visual Exploration"
+title: 'Penguin Story: A Visual Exploration'
 author: "Ehsna Zangene"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
