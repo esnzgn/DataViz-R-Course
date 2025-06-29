@@ -24,9 +24,9 @@ penguins_raw <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Cou
 head(penguins_raw)
 ```
 
-!["Penguin Body"](../images/penguins.png)
+!["Penguin Body"](../images/penguins.jpg)
 
-!["Penguins Species"](../images/penguins_body.png)
+!["Penguins Species"](../images/penguins_body.jpg){width="666"}
 
 # Cleaning the Data
 
