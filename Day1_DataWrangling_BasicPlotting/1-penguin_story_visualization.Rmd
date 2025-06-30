@@ -11,7 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(janitor)
 library(lubridate)
-setwd("~/DataViz-R-Course")
 ```
 
 # Meet the Penguins
@@ -26,9 +25,11 @@ penguins_raw <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Cou
 head(penguins_raw)
 ```
 
-!["Penguin Body"](../images/penguins.jpg)
+!["Palmer station"](../images/antarctica-map.png)
 
-!["Penguins Species"](../images/penguins_body.jpg){width="666"}
+!["Penguins Species: Chinstrap, Gentoo, Adelie"](../images/penguins.jpg)
+
+!["Penguin Body"](../images/penguins_body.jpg)
 
 # Cleaning the Data
 
