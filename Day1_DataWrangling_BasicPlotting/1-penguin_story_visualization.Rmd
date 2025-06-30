@@ -2,8 +2,8 @@
 title: 'Penguin Story: A Visual Exploration'
 author: "Ehsna Zangene"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
