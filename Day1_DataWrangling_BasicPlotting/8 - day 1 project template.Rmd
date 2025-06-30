@@ -1,0 +1,117 @@
+
+---
+title: "Penguin Data Project"
+author: "Your Name"
+output: html_document, email it to Ehsan
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+```
+
+## 📘 Part 1: Import and Explore the Data
+
+```{r import}
+# Import the dataset
+
+
+# Convert to tibble if necessary
+
+
+# View structure and first rows
+
+```
+
+## 🧹 Part 2: Data Cleaning
+
+### Missing Values
+
+```{r missing-values}
+
+```
+
+### Duplicates
+
+```{r duplicates}
+
+```
+
+
+### Create Factor Levels
+
+```{r flipper-range small < 190, medium = middle, and large >213 }
+
+```
+
+### String Manipulation
+
+```{r string-manipulation spceis in upper case}
+
+
+```
+
+## 🔄 Part 3: Data Reshaping
+
+### Long Format
+
+```{r pivot-long}
+# pivot longer for names_to = "measurement", values_to = "value"
+
+
+```
+
+### Wide Format
+
+```{r pivot-wide}
+# back to wider
+
+
+```
+
+## 📊 Part 4: Data Visualization
+
+### 1. Scatterplot
+
+```{r scatterplot}
+# scatter plot of flipper vs bill length
+
+
+```
+
+### 2. Boxplot
+
+```{r boxplot}
+# box plot body mass
+
+
+```
+
+### 3. Barplot
+
+```{r barplot}
+# barplot = Island
+
+```
+
+### 4. Line Plot
+
+```{r any plot}
+#  year and species then summerize
+
+#  year and body mass then summerize
+```
+
+### 5. Shape or Size Aesthetic
+
+```{r shape-size}
+# shape-size sex, year, Flipper Length vs Body Mass by Sex and Year")
+```
+
+
+## 💾 Part 5: Save the Cleaned Data
+
+```{r save-data and plots}
+
+```
