@@ -58,6 +58,7 @@ head(penguins_wide)
 ---
 
 ## Example 4: A Toy Example of pivot_longer()
+!["workflow schematic"](../images/tidyr_pivot.png)
 
 ```{r}
 country <- c("x", "y", "z")
@@ -66,11 +67,12 @@ yr1970 <-  c(13, 23, 33)
 yr2010 <-  c(15, 25, 35)
 country_data <- tibble(country, yr1960, yr1970, yr2010)
 
-pivot_longer(data = country_data,
+country_longer <- pivot_longer(data = country_data,
              cols = yr1960:yr2010,
              names_to = "year",
              names_prefix = "yr",
              values_to = "metric")
+(country_longer)
 ```
 
 ---
@@ -148,7 +150,7 @@ left_join(bill_data, species_data, by = "species") |> head()
 ## Example 10: Save the Long Format Penguin Data
 
 ```{r}
-write_csv(penguins_long, "penguins_long.csv")
+write_csv(penguins_long, "../output/penguins_long.csv")
 ```
 
 ---

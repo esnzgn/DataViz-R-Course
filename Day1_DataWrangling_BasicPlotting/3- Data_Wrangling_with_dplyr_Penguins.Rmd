@@ -102,6 +102,7 @@ penguins_clean$species    <- ifelse(
 ```{r select}
 penguins_selected <- penguins_clean |> 
   select(species, sex, flipper_length_mm, body_mass_g)
+head(penguins_selected)
 ```
 
 ## Filter Rows
@@ -109,6 +110,10 @@ penguins_selected <- penguins_clean |>
 ```{r filter}
 adelie_penguins <- penguins_selected |> 
   filter(species == "Adelie")
+
+head(adelie_penguins)
+unique(penguins_selected$species)
+unique(adelie_penguins$species)
 ```
 
 ## Arrange Rows
@@ -123,6 +128,10 @@ arranged_penguins <- penguins_selected |>
 ```{r mutate}
 penguins_selected <- penguins_selected |> 
   mutate(body_mass_kg = body_mass_g / 1000)
+
+# covert the fillper length into cm
+penguins_selected <- penguins_selected |> 
+  mutate(flipper_length_cm = flipper_length_mm / 10)
 ```
 
 ## Group By & Summarise
@@ -180,7 +189,7 @@ penguins_clean |>
 ## Save Cleaned Data
 
 ```{r save}
-saveRDS(penguins_clean, file = "outputs/2024_11_01_penguin_clean.RDS")
+saveRDS(penguins_clean, file = "../output/penguins_clean.RDS")
 ```
 
 # Exercise
