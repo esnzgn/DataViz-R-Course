@@ -54,22 +54,27 @@ iris_dt
 ## 5. Example 4: Import an Excel file
 
 ```{r}
-excel_example <- read_excel("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/mtcars.xlsx")
+excel_example <- read_excel("../data/mtcars.xlsx")
 head(excel_example)
 ```
 
 ## 6. Example 5: Reading only specific columns with `fread`
 
 ```{r}
-small_iris <- fread("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/4440e5d6fc66d8fce4faa9a3df8415bd17bb0758/data/iris.csv",
+small_iris <- fread("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv",
                     select = c("Sepal.Length", "Species"))
 head(small_iris)
+
+# do the same as above from the locl repo
+small_iris_2 <- fread("../data/iris.csv",
+                    select = c("Sepal.Length", "Species"))
+head(small_iris_2)
 ```
 
 ## 7. Example 6: Reading limited rows with `read_csv`
 
 ```{r}
-few_rows <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/4440e5d6fc66d8fce4faa9a3df8415bd17bb0758/data/iris.csv", n_max = 5)
+few_rows <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv", n_max = 5)
 few_rows
 ```
 
@@ -90,14 +95,14 @@ write.csv(mtcars, "mtcars.csv")
 ## 10. Example 9: Reading a dataset using `skip` in `fread`
 
 ```{r}
-skip_iris <- fread("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/4440e5d6fc66d8fce4faa9a3df8415bd17bb0758/data/iris.csv", skip = 5)
+skip_iris <- fread("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv", skip = 5)
 head(skip_iris)
 ```
 
 ## 11. Example 10: Column filtering with `read_csv`
 
 ```{r}
-read_select <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/4440e5d6fc66d8fce4faa9a3df8415bd17bb0758/data/iris.csv",
+read_select <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv",
                         col_select = c("Species", "Petal.Width"))
 head(read_select)
 ```
