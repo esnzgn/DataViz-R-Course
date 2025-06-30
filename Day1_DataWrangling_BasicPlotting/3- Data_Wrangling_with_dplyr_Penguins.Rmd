@@ -69,8 +69,26 @@ colnames(penguins_clean)
 
 ## Rename Text Values
 !["dplyr schematic"](../images/dplyr_schema.png) 
-```{r rename-text}
+```{r rename-text using dplyr}
 penguins_clean <- penguins_clean |> 
+  mutate(species = case_when(
+    species == "Adelie Penguin (Pygoscelis adeliae)" ~ "Adelie",
+    species == "Gentoo penguin (Pygoscelis papua)" ~ "Gentoo",
+    species == "Chinstrap penguin (Pygoscelis antarctica)" ~ "Chinstrap",
+    TRUE ~ species
+  ))
+```
+
+```{r rename-text using base R}
+
+penguins_clean$species    <- ifelse(
+          penguins_clean$species == "Adelie Penguin (Pygoscelis adeliae)" , "Adelie",
+            ifelse(penguins_clean$species == "Gentoo penguin (Pygoscelis papua)", "Gentoo",
+              ifelse(penguins_clean$species == "Chinstrap penguin (Pygoscelis antarctica)",                 "Chinstrap", penguins_clean$species)
+             )
+        )  
+
+  penguins_clean |>
   mutate(species = case_when(
     species == "Adelie Penguin (Pygoscelis adeliae)" ~ "Adelie",
     species == "Gentoo penguin (Pygoscelis papua)" ~ "Gentoo",
