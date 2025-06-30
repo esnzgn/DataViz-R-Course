@@ -11,7 +11,7 @@ editor_options:
 ⏱️ **Duration:** 3 Days\
 📂 **Repository Contents:** Full course materials (slides, code,
 exercises, reports)\
-🏢 **Designed for:** https://www.physalia-courses.org/
+🏢 **It is a physalia course** https://www.physalia-courses.org/
 
 ------------------------------------------------------------------------
 
