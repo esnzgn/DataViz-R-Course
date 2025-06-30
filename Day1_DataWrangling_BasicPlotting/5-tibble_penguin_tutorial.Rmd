@@ -117,7 +117,7 @@ penguins_tbl |> arrange(desc(body_mass_g))
 # 10. Saving the Tibble
 
 ```{r save}
-write_csv(penguins_tbl, "penguins_cleaned.csv")
+write_csv(penguins_tbl, "../output/penguins_cleaned.csv")
 ```
 
 # Exercises
