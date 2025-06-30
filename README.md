@@ -1,8 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
 
 # 🎨 Data Visualization in R: From Data Wrangling to Interactive Plots
  
@@ -11,7 +6,7 @@ editor_options:
 ⏱️ **Duration:** 3 Days\
 📂 **Repository Contents:** Full course materials (slides, code,
 exercises, reports)\
-🏢 **It is a physalia course** https://www.physalia-courses.org/
+🏢 **It is a physalia course** https://www.physalia-courses.org/courses-workshops/course56/
 
 ------------------------------------------------------------------------
 
