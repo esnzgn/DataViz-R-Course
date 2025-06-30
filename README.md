@@ -5,12 +5,13 @@ editor_options:
 ---
 
 # 🎨 Data Visualization in R: From Data Wrangling to Interactive Plots
-
+ 
 📅 **Course Dates:** 30 June – 2 July 2025\
 🌍 **Mode:** Online, International Participation\
 ⏱️ **Duration:** 3 Days\
 📂 **Repository Contents:** Full course materials (slides, code,
-exercises, reports)
+exercises, reports)\
+🏢 **Designed for:** https://www.physalia-courses.org/
 
 ------------------------------------------------------------------------
 
