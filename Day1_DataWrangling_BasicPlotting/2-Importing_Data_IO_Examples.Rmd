@@ -1,8 +1,10 @@
-
 ---
 title: "Importing Datasets from CSV, Excel, and Online Repositories"
 author: "Ehsan Zangene"
 output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -15,10 +17,13 @@ library(dplyr)
 
 !["Importing CSV files in R"](../images/import_files.png)
 
-
 ## 1. Introduction
 
-Welcome to today’s session on **Importing Datasets from CSV, Excel, and Online Repositories**. In this session, we’ll explore various data input (I/O) techniques in R, including base functions and powerful packages like `readr`, `data.table`, and `readxl`. We'll also access datasets from online sources and save them in different formats.
+Welcome to today’s session on **Importing Datasets from CSV, Excel, and
+Online Repositories**. In this session, we’ll explore various data input
+(I/O) techniques in R, including base functions and powerful packages
+like `readr`, `data.table`, and `readxl`. We'll also access datasets
+from online sources and save them in different formats.
 
 ## 2. Example 1: Import a CSV file using `read.csv`
 
@@ -39,6 +44,7 @@ iris_readr
 ## 4. Example 3: Import a CSV file using `fread`
 
 !["Fast data loading"](../images/fread.webp)
+
 ```{r}
 # lib data.table
 iris_dt <- fread("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv")
@@ -98,8 +104,24 @@ head(read_select)
 
 ## Exercises
 
-1. Load the `penguins` dataset from `palmerpenguins` and save it locally.
-2. Read the saved dataset using `fread`.
-3. Use `read_csv()` to load the `mtcars.csv` and filter rows with mpg > 20.
+1.  Load the `penguins` dataset from `palmerpenguins` and save it
+    locally.
+2.  Read the saved dataset using `fread`.
+3.  Use `read_csv()` to load the `mtcars.csv` and filter rows with mpg
+    \> 20.
 
-These examples demonstrate a variety of efficient ways to import and work with datasets in R. Be mindful of the size and structure of your files to optimize performance.
+These examples demonstrate a variety of efficient ways to import and
+work with datasets in R. Be mindful of the size and structure of your
+files to optimize performance.
+
+#One last thing about timing
+
+csv_name \<- "surveys.csv"
+
+read.table.timing \<- system.time(read.table(csv_name, header = TRUE,
+sep = ",")) readr.timing \<- system.time(read_delim(csv_name, delim =
+",", col_names = TRUE)) data.table.timing \<- system.time(allData \<-
+fread(csv_name, showProgress = FALSE)) data \<- data.frame(method =
+c('read.table', 'readr', 'fread'), timing = c(read.table.timing[3],
+readr.timing[3], data.table.timing[3])) data method timing read.table
+0.121 readr 0.549 fread 0.007

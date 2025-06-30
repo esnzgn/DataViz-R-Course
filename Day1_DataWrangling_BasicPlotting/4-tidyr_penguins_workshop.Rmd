@@ -1,0 +1,164 @@
+
+---
+title: "Data Reshaping with tidyr: A Practical Introduction"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(palmerpenguins)
+```
+
+# Introduction
+
+In this session, we explore how to reshape data using the `tidyr` package in R, using the `penguins` dataset. This is a one-hour guided session designed with examples and explanations you can read aloud while teaching.
+
+---
+
+# Why Reshape Data?
+
+While neither wide nor long format is *more correct*, long format works better with most tidyverse tools. We'll use `pivot_longer()` and `pivot_wider()` to reshape data and see how joins combine information from multiple sources.
+
+---
+
+## Example 1: Preview the Penguin Dataset
+
+```{r}
+head(penguins)
+```
+
+---
+
+## Example 2: Reshape with `pivot_longer()`
+!["tidy data"](../images/tidy-1.png)
+!["longger vs wider pivot"](../images/tidyr_pivot.png)
+
+```{r}
+penguins_long <- penguins |> 
+  pivot_longer(cols = c(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g),
+               names_to = "measurement",
+               values_to = "value")
+
+head(penguins_long)
+```
+
+---
+
+## Example 3: Reshape Back with `pivot_wider()`
+!["workflow schematic"](../images/tidyr_pivot.png)
+
+```{r}
+penguins_wide <- penguins_long |> 
+  pivot_wider(names_from = measurement, values_from = value)
+
+head(penguins_wide)
+```
+
+---
+
+## Example 4: A Toy Example of pivot_longer()
+
+```{r}
+country <- c("x", "y", "z")
+yr1960 <-  c(10, 20, 30)
+yr1970 <-  c(13, 23, 33)
+yr2010 <-  c(15, 25, 35)
+country_data <- tibble(country, yr1960, yr1970, yr2010)
+
+pivot_longer(data = country_data,
+             cols = yr1960:yr2010,
+             names_to = "year",
+             names_prefix = "yr",
+             values_to = "metric")
+```
+
+---
+
+## Example 5: Create a new object instead of overwriting
+
+```{r}
+long_country_data <- pivot_longer(data = country_data,
+                                  cols = yr1960:yr2010,
+                                  names_to = "year",
+                                  names_prefix = "yr",
+                                  values_to = "metric")
+
+long_country_data
+```
+
+---
+
+# Join Operations
+
+Let’s explore how to merge data frames using different join types.
+!["workflow schematic"](../images/join-diagrams.png)
+
+---
+
+## Example 6: Left Join
+
+```{r}
+df_primary <- tibble(
+  ID = c("A", "B", "C", "D", "F"),
+  y = c(5, 5, 8, 0, 9)
+)
+
+df_secondary <- tibble(
+  ID = c("A", "B", "C", "D", "E"),
+  z = c(30, 21, 22, 25, 29)
+)
+
+left_join(df_primary, df_secondary, by = "ID")
+```
+
+---
+
+## Example 7: Right Join
+
+```{r}
+right_join(df_primary, df_secondary, by = "ID")
+```
+
+---
+
+## Example 8: Full Join
+
+```{r}
+full_join(df_primary, df_secondary, by = "ID")
+```
+
+---
+
+## Example 9: Practice Join with Penguin Subsets
+
+```{r}
+species_data <- penguins |> 
+  select(species, island) |> 
+  distinct()
+
+bill_data <- penguins |> 
+  select(species, bill_length_mm)
+
+left_join(bill_data, species_data, by = "species") |> head()
+```
+
+---
+
+## Example 10: Save the Long Format Penguin Data
+
+```{r}
+write_csv(penguins_long, "penguins_long.csv")
+```
+
+---
+
+# Exercises
+
+1. Use `pivot_longer()` on `penguins` to collapse only flipper and body_mass columns.
+2. Join two subsets of the `penguins` dataset using `left_join()`.
+3. Save your reshaped data as a CSV and open it to review the structure.
+
+---
+
+Happy data reshaping!
