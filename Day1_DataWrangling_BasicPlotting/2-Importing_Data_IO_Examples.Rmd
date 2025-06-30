@@ -1,7 +1,7 @@
 
 ---
 title: "Importing Datasets from CSV, Excel, and Online Repositories"
-author: "Your Name"
+author: "Ehsan Zangene"
 output: html_document
 ---
 
@@ -13,33 +13,41 @@ library(readxl)
 library(dplyr)
 ```
 
+!["Importing CSV files in R"](../images/import_files.png)
+
+
 ## 1. Introduction
 
-Welcome to today’s session on **Importing Datasets from CSV, Excel, and Online Repositories**. In this one-hour session, we’ll explore various data input (I/O) techniques in R, including base functions and powerful packages like `readr`, `data.table`, and `readxl`. We'll also access datasets from online sources and save them in different formats.
+Welcome to today’s session on **Importing Datasets from CSV, Excel, and Online Repositories**. In this session, we’ll explore various data input (I/O) techniques in R, including base functions and powerful packages like `readr`, `data.table`, and `readxl`. We'll also access datasets from online sources and save them in different formats.
 
 ## 2. Example 1: Import a CSV file using `read.csv`
 
 ```{r}
-iris_data <- read.csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/4440e5d6fc66d8fce4faa9a3df8415bd17bb0758/data/iris.csv")
+# R base
+iris_data <- read.csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv")
 head(iris_data)
 ```
 
 ## 3. Example 2: Import a CSV file using `read_csv`
 
 ```{r}
-iris_readr <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/4440e5d6fc66d8fce4faa9a3df8415bd17bb0758/data/iris.csv")
+# lib readr
+iris_readr <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv")
+iris_readr
 ```
 
 ## 4. Example 3: Import a CSV file using `fread`
 
 ```{r}
-iris_dt <- fread("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/4440e5d6fc66d8fce4faa9a3df8415bd17bb0758/data/iris.csv")
+# lib data.table
+iris_dt <- fread("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv")
+iris_dt
 ```
 
 ## 5. Example 4: Import an Excel file
 
 ```{r}
-excel_example <- read_excel("https://github.com/esnzgn/DataViz-R-Course/raw/4440e5d6fc66d8fce4faa9a3df8415bd17bb0758/data/example_data.xlsx")
+excel_example <- read_excel("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/mtcars.xlsx")
 head(excel_example)
 ```
 

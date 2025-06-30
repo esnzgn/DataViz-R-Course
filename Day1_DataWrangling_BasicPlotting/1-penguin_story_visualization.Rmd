@@ -13,6 +13,10 @@ library(janitor)
 library(lubridate)
 ```
 
+!["workflow schematic"](../images/workflowschematic.jpeg)
+workflowschematic
+
+
 # Meet the Penguins
 
 The Palmer Penguins dataset contains size measurements, clutch observations, and blood isotope ratios for three penguin species: **Adelie**, **Chinstrap**, and **Gentoo**, observed on three islands in the Palmer Archipelago, Antarctica (2007–2009).
