@@ -38,6 +38,7 @@ iris_readr
 
 ## 4. Example 3: Import a CSV file using `fread`
 
+!["Fast data loading"](../images/fread.webp)
 ```{r}
 # lib data.table
 iris_dt <- fread("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv")
