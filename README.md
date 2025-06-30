@@ -7,7 +7,9 @@
 📂 **Repository Contents:** Full course materials (slides, code,
 exercises, reports)\
 🏢 **It is a physalia course** (https://www.physalia-courses.org/courses-workshops/course56/)\
-<img src="images/physalia.jpg" alt="Physalia courses" width="300"/>
+<div align="center">
+  <img src="images/physalia.jpg" alt="Physalia courses" width="300"/>
+</div>
 
 ------------------------------------------------------------------------
 
