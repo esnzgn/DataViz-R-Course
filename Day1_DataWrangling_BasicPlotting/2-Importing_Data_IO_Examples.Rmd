@@ -105,6 +105,11 @@ head(skip_iris)
 read_select <- read_csv("https://raw.githubusercontent.com/esnzgn/DataViz-R-Course/main/data/iris.csv",
                         col_select = c("Species", "Petal.Width"))
 head(read_select)
+
+# Use read_csv() to load the mtcars.csv and filter rows with mpg > 20
+mtcars_csv_orgin <- read_csv("../data/mtcars.csv")
+colnames(mtcars_csv_orgin)
+mtcars_above_20mpg <- subset(mtcars_csv_orgin, mpg > 20)
 ```
 
 ## Exercises
