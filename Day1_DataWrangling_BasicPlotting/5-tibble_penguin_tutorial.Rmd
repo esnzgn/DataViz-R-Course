@@ -37,11 +37,17 @@ survey_tibble
 
 ```{r explore}
 head(survey_tibble, 2)
+
 tail(survey_tibble, 1)
+
 nrow(survey_tibble)
+
 ncol(survey_tibble)
+
 colnames(survey_tibble)
+
 glimpse(survey_tibble)
+
 str(survey_tibble)
 ```
 
