@@ -29,13 +29,17 @@ We'll cover:
 library(tidyverse)
 library(janitor)
 library(palmerpenguins)
+library("palmerpenguins")
+# data(package = "palmerpenguins")
 library(lubridate)
 ```
 
 # Load and Explore Raw Data
 
 ```{r load-data}
-penguins_raw <- penguins
+penguins_raw <- palmerpenguins::penguins_raw
+# data("penguins")
+# penguins_raw <- penguins
 glimpse(penguins_raw)
 ```
 
