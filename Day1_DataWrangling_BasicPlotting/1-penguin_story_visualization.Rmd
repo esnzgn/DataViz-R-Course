@@ -12,7 +12,7 @@ library(tidyverse)
 library(janitor)
 library(lubridate)
 ```
-
+!["workflow schematic"](../images/data_viz.jpg)
 !["workflow schematic"](../images/workflowschematic.jpeg)
 workflowschematic
 
