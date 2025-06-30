@@ -28,7 +28,8 @@ We'll cover:
 ```{r load-packages}
 library(tidyverse)
 library(janitor)
-library(palmerpenguins)
+# library(palmerpenguins)
+# BiocManager::install("palmerpenguins")
 library("palmerpenguins")
 # data(package = "palmerpenguins")
 library(lubridate)
@@ -53,9 +54,17 @@ colnames(penguins_clean)
 ## Rename Columns
 
 ```{r rename-columns}
+# View(penguins_clean)
+colnames(penguins_clean)
 penguins_clean <- penguins_clean |> 
   rename(delta_15n = delta_15_n_o_oo,
          delta_13c = delta_13_c_o_oo)
+colnames(penguins_clean)
+
+# "clutch_completion"
+#  "culmen_length_mm"  "culmen_depth_mm"   "flipper_length_mm"
+# "cul_len_mm"  "cul_dep_mm"   "flipp_len_mm"
+
 ```
 
 ## Rename Text Values
