@@ -2,6 +2,7 @@
 ---
 title: "Advanced Data Visualizations with Synthetic Data"
 output: html_document
+author: "Ehsan Zangene"
 ---
 
 ```{r setup, include=FALSE}
