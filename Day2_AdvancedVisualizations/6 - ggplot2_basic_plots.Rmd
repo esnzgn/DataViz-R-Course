@@ -23,6 +23,8 @@ Welcome everyone! Today, we are going to explore the basics of data visualizatio
 ```{r}
 penguins %>%
   ggplot()
+
+  ggplot(data = penguins)
 ```
 
 This creates an empty plot background. You can also write:
@@ -70,7 +72,14 @@ penguins %>%
 penguins %>%
   ggplot(aes(x = flipper_length_mm, y = body_mass_g, colour = species)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_smooth(method = "lm", se = F)
+```
+```{r}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g, colour = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  geom_jitter()
 ```
 
 ---
@@ -133,3 +142,26 @@ penguins %>%
 Try modifying the scatterplot to color by `sex`, or try changing the plot type to `geom_boxplot()` grouped by `island`.
 
 Happy plotting!
+```{r}
+penguins %>%
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g, colour = sex)) +
+  geom_point() +
+  labs(
+    title = " Penguins: Body Mass vs Filpper Length",
+    x = "Flipper Length (mm)",
+    y = "Body Mass (g)"
+  ) +
+  facet_wrap(~ island)
+```
+
+```{r}
+penguins %>%
+  ggplot(aes(x = island, y = body_mass_g, fill = island)) +
+  geom_boxplot() +
+  labs(
+    title = " Distribution of Body Mass by Island",
+    x = "Island",
+    y = "Body Mass (g)"
+  )
+```
+
