@@ -1,0 +1,86 @@
+
+---
+title: "Using Custom PNG Images in ggplot2"
+author: "Ehsan Zangene"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(palmerpenguins)
+# BiocManager::install("ggimage")
+library(ggimage)
+```
+
+## 🐧 Custom Shapes with PNG Files in ggplot2
+
+This example demonstrates how to use **custom PNG images** to replace default shapes for a variable like `species` in the `penguins` dataset.
+
+### Step 1: Load and Preview the Data
+
+```{r}
+penguins_clean <- penguins |> 
+  drop_na(species, body_mass_g)
+
+head(penguins_clean)
+```
+
+### Step 2: Assign an Image Path for Each Species
+
+Ensure you have 3 PNG images (small icons) in an "img" directory in your R project root folder:
+
+- `adelie.png`
+- `chinstrap.png`
+- `gentoo.png`
+
+```{r}
+penguins_img <- penguins_clean |> 
+  mutate(image = case_when(
+    species == "Adelie" ~ "./img/adelie.png",
+    species == "Chinstrap" ~ "./img/chinstrap.png",
+    species == "Gentoo" ~ "./img/gentoo.png"
+  ))
+```
+
+### Step 3: Create the Plot Using ggimage
+
+```{r}
+ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_image(aes(image = image), size = 0.05) +
+  theme_minimal() +
+  labs(
+    title = "Penguins: Body Mass vs Flipper Length",
+    x = "Flipper Length (mm)",
+    y = "Body Mass (g)"
+  )
+
+ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_image(aes(image = image), size = 0.05) +
+  labs(
+    title = "Penguins: Body Mass vs Flipper Length",
+    x = "Flipper Length (mm)",
+    y = "Body Mass (g)"
+  ) +
+  theme(
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.grid.major = element_line(color = "gray90"),
+    panel.grid.minor = element_line(color = "gray95"),
+    axis.text = element_text(color = "black"),
+    axis.title = element_text(color = "black"),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+
+### Notes
+
+- The PNG files must be present in the path `img/` relative to your Rmd file.
+- Use small and simple PNG files (~32x32 pixels) for better performance and clarity.
+
+### Optional: Save as PNG or PDF
+
+```{r, eval=FALSE}
+ggsave("penguins_custom_image_plot.png", width = 8, height = 5)
+```

@@ -1,0 +1,160 @@
+
+---
+title: "Advanced Data Visualization with ggplot2 Extensions"
+author: "Ehsan Zangene"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(palmerpenguins)
+# BiocManager::install(c("ggalt", "ggbump", "ggh4x"))
+library(ggalt)
+library(ggbump)
+library(ggh4x)
+library(gghighlight)
+pal <- c("Adelie" = "#FF8C00", "Gentoo" = "#159090", "Chinstrap" = "#A034F0")
+```
+
+# ggdist: Raincloud Plots
+
+```{r raincloud}
+library(ggdist)
+
+penguins |>
+  ggplot(aes(x = species, y = culmen_length_mm, fill = species)) +
+  stat_halfeye(point_colour = NA, .width = 0, justification = -.2) +
+  geom_boxplot(outlier.shape = NA, alpha = .4, width = .1) +
+  stat_dots(aes(colour = species), side = "left", justification = 1.1, dotsize = .2, binwidth = .4) +
+  scale_fill_manual(values = pal) +
+  scale_colour_manual(values = pal) +
+  guides(fill = "none") +
+  coord_flip()
+```
+
+# ggdist: Interval Plots
+
+```{r interval}
+penguins |>
+  drop_na(sex) |>
+  ggplot(aes(x = species, y = culmen_length_mm)) +
+  stat_interval(.width = c(.5, .66, .95)) +
+  stat_halfeye(aes(fill = sex), .width = 0, shape = 21, colour = "white", slab_alpha = .4, size = .5,
+               position = position_nudge(x = .05)) +
+  scale_color_viridis_d(option = "mako", direction = -1, end = .9)
+```
+
+# ggdensity: Density Plots
+
+```{r density}
+library(ggdensity)
+
+penguins |>
+  ggplot(aes(x = culmen_length_mm, y = culmen_depth_mm, colour = species)) +
+  geom_point(alpha = .2) +
+  geom_hdr_lines() +
+  scale_colour_manual(values = pal)
+```
+
+# ggridges: Ridge Plots
+
+```{r ridge}
+library(ggridges)
+
+penguins |>
+  ggplot(aes(x = culmen_length_mm, y = species, fill = species)) +
+  geom_density_ridges() +
+  scale_fill_manual(values = pal) +
+  scale_colour_manual(values = pal) +
+  theme(legend.position = "none")
+```
+
+# ggbump: Bump Charts
+
+```{r bump}
+library(ggbump)
+library(lubridate)
+
+penguin_summary <- penguins |>
+  mutate(date_egg = dmy(date_egg)) |>
+  filter(clutch_completion == "Yes") |>
+  mutate(year = year(date_egg)) |>
+  group_by(species, year) |>
+  summarise(n = n(), .groups = "drop")
+
+penguin_summary |>
+  ggplot(aes(x = year, y = n, colour = species)) +
+  geom_point(size = 7) +
+  geom_bump() +
+  geom_text(data = filter(penguin_summary, year == max(year)),
+            aes(x = year + 0.1, label = species, hjust = 0), size = 5) +
+  scale_x_continuous(limits = c(2007, 2009.5), breaks = 2007:2009) +
+  labs(y = "Total number of complete clutches") +
+  scale_fill_manual(values = pal) +
+  scale_colour_manual(values = pal) +
+  theme(legend.position = "none")
+```
+
+# ggalt: Dumbbell Charts
+
+```{r dumbbell}
+library(ggalt)
+
+summary_counts <- penguins |>
+  group_by(sex, species) |>
+  summarise(mean = mean(body_mass_g, na.rm = TRUE), .groups = "drop") |>
+  pivot_wider(names_from = sex, values_from = mean)
+
+ggplot(summary_counts, aes(y = species, x = FEMALE, xend = MALE)) +
+  geom_dumbbell(size = 3, color = "#e3e2e1", colour_x = "#5b8124", colour_xend = "#bad744") +
+  labs(x = "Body mass (g)", y = "")
+```
+
+# ggh4x: Nested Facets
+
+```{r facet}
+library(ggh4x)
+
+penguins |>
+  mutate(Nester = ifelse(species == "Gentoo", "Crustaceans", "Fish & Krill")) |>
+  ggplot(aes(x = culmen_length_mm, y = culmen_depth_mm, colour = species)) +
+  geom_point() +
+  facet_nested(~ Nester + species) +
+  scale_colour_manual(values = pal) +
+  theme(legend.position = "none")
+```
+
+# gghighlight: Highlighting
+
+```{r highlight}
+library(gghighlight)
+
+penguins |>
+  ggplot(aes(body_mass_g, fill = species)) +
+  geom_histogram(position = "identity") +
+  gghighlight() +
+  scale_fill_manual(values = pal) +
+  facet_wrap(~ species)
+```
+
+# patchwork and text annotation
+
+```{r patchwork, fig.height=6, fig.width=10}
+library(patchwork)
+p1 <- ggplot(penguins, aes(x = culmen_length_mm, y = culmen_depth_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+
+p2 <- ggplot(penguins, aes(x = culmen_length_mm, y = culmen_depth_mm, colour = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_colour_manual(values = pal) +
+  theme_minimal()
+
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+
+

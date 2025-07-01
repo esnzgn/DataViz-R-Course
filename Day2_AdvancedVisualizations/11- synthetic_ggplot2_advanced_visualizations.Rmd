@@ -1,0 +1,163 @@
+
+---
+title: "Advanced Data Visualizations with Synthetic Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(ggfortify)
+library(patchwork)
+library(reshape2)
+library(ggrepel)
+library(ComplexHeatmap)
+library(ggplot2)
+library(palmerpenguins)
+library(ggdist)
+```
+## Raincloud Plot with ggdist
+
+Raincloud plots combine a density plot, boxplot, raw data points, and any desired summary statistics.
+
+```{r raincloud-plot}
+penguins_raw <- clean_names(tibble(penguins_raw))
+penguins_raw |>
+  ggplot(aes(x = species,
+             y = culmen_length_mm,
+             fill = species)) +
+  ggdist::stat_halfeye(
+    point_colour = NA,
+    .width = 0,
+    justification = -0.3,
+    slab_colour = "gray70"
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.shape = NA,
+    alpha = 0.4
+  ) +
+  geom_jitter(
+    aes(color = species),
+    width = 0.1,
+    alpha = 0.3
+  ) +
+  labs(title = "Raincloud Plot of Culmen Length by Species") +
+  theme_minimal()
+```
+
+# 📊 1. Heatmap
+
+```{r}
+# Generate synthetic data
+set.seed(123)
+heatmap_data <- matrix(rnorm(1000), nrow = 100, ncol = 10)
+colnames(heatmap_data) <- paste0("Gene_", 1:10)
+rownames(heatmap_data) <- paste0("Sample_", 1:100)
+
+# Convert to dataframe and plot heatmap
+heatmap_data_scaled <- scale(heatmap_data)
+heatmap(as.matrix(heatmap_data_scaled), col = viridis::viridis(100), 
+        main = "Heatmap of Gene Expression")
+```
+
+# 🔬 2. PCA Biplot
+
+```{r}
+# Perform PCA
+df_pca <- as.data.frame(heatmap_data)
+df_pca$Group <- rep(c("A", "B"), each = 50)
+autoplot(prcomp(df_pca[,1:10]), data = df_pca, colour = 'Group', loadings = TRUE)
+```
+
+# 🎻 3. Violin Plot
+
+```{r}
+# Create violin plot data
+set.seed(321)
+violin_data <- data.frame(
+  Condition = rep(c("Treatment", "Control"), each = 100),
+  Expression = c(rnorm(100, mean = 6, sd = 1.5), rnorm(100, mean = 7.5, sd = 1.5))
+)
+
+# Plot
+ggplot(violin_data, aes(x = Condition, y = Expression, fill = Condition)) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(width = 0.1) +
+  theme_minimal() +
+  labs(title = "Violin Plot with Boxplot Overlay")
+```
+
+# 🧬 4. Manhattan Plot
+
+```{r}
+# Create Manhattan plot data
+set.seed(42)
+manhattan_data <- data.frame(
+  Chromosome = sample(paste0("chr", 1:22), 1000, replace = TRUE),
+  Position = sample(1:1e6, 1000),
+  PValue = runif(1000)
+)
+
+# Transform data
+manhattan_data$logp <- -log10(manhattan_data$PValue)
+manhattan_data$Chromosome <- factor(manhattan_data$Chromosome, 
+                                    levels = paste0("chr", 1:22))
+
+# Plot
+ggplot(manhattan_data, aes(x = Position, y = logp, color = Chromosome)) +
+  geom_point(alpha = 0.6) +
+  facet_wrap(~Chromosome, scales = "free_x", nrow = 4) +
+  theme_minimal() +
+  labs(title = "Manhattan Plot", y = "-log10(P-value)")
+```
+```{r}
+# Modified Plot with x-axis labels at 45 degrees and smaller font
+ggplot(manhattan_data, aes(x = Position, y = logp, color = Chromosome)) +
+  geom_point(alpha = 0.6) +
+  facet_wrap(~Chromosome, scales = "free_x", nrow = 4) +
+  theme_minimal() +
+  labs(title = "Manhattan Plot", y = "-log10(P-value)") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 5)  # rotate and shrink font
+  )
+```
+
+```{r}
+# Modified Plot with threshold line and rotated x-axis labels
+ggplot(manhattan_data, aes(x = Position, y = logp, color = Chromosome)) +
+  geom_point(alpha = 0.6) +
+  geom_hline(yintercept = -log10(0.05), color = "red", linetype = "dashed", size = 0.5) +
+  facet_wrap(~Chromosome, scales = "free_x", nrow = 4) +
+  theme_minimal() +
+  labs(title = "Manhattan Plot", y = "-log10(P-value)") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8)
+  )
+
+```
+
+# 🧪 5. Oncoplot (mutation matrix)
+
+```{r}
+# Create mutation matrix
+oncoplot_data <- data.frame(
+  Sample = paste0("Sample_", 1:20),
+  TP53 = sample(c(0,1), 20, replace = TRUE),
+  KRAS = sample(c(0,1), 20, replace = TRUE),
+  PIK3CA = sample(c(0,1), 20, replace = TRUE),
+  BRCA1 = sample(c(0,1), 20, replace = TRUE),
+  EGFR = sample(c(0,1), 20, replace = TRUE)
+)
+
+# Convert to matrix
+mat <- as.matrix(oncoplot_data[,-1])
+rownames(mat) <- oncoplot_data$Sample
+
+# Plot using ComplexHeatmap
+Heatmap(mat, name = "Mutation", col = c("0" = "white", "1" = "red"))
+```
+
+> 📘 **Note**: You might need to install these packages with:
+> `install.packages("viridis")`, `BiocManager::install("ComplexHeatmap")`

@@ -75,6 +75,8 @@ weird_tibble <- tibble(
 )
 weird_tibble$`1st column`
 weird_tibble$`column with space`
+
+weird_tibble <- clean_names(weird_tibble)
 ```
 
 # 5. Mutating and Adding Columns
