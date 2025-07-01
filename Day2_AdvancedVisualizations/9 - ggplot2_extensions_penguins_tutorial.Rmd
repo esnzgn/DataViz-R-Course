@@ -8,7 +8,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
-library(palmerpenguins)
+# library(palmerpenguins)
+# palmerpenguins::penguins
 # BiocManager::install(c("ggalt", "ggbump", "ggh4x"))
 library(ggalt)
 library(ggbump)
@@ -23,7 +24,7 @@ pal <- c("Adelie" = "#FF8C00", "Gentoo" = "#159090", "Chinstrap" = "#A034F0")
 library(ggdist)
 
 penguins |>
-  ggplot(aes(x = species, y = culmen_length_mm, fill = species)) +
+  ggplot(aes(x = species, y = flipper_length_mm, fill = species)) +
   stat_halfeye(point_colour = NA, .width = 0, justification = -.2) +
   geom_boxplot(outlier.shape = NA, alpha = .4, width = .1) +
   stat_dots(aes(colour = species), side = "left", justification = 1.1, dotsize = .2, binwidth = .4) +
@@ -38,7 +39,7 @@ penguins |>
 ```{r interval}
 penguins |>
   drop_na(sex) |>
-  ggplot(aes(x = species, y = culmen_length_mm)) +
+  ggplot(aes(x = species, y = bill_length_mm)) +
   stat_interval(.width = c(.5, .66, .95)) +
   stat_halfeye(aes(fill = sex), .width = 0, shape = 21, colour = "white", slab_alpha = .4, size = .5,
                position = position_nudge(x = .05)) +
@@ -51,7 +52,7 @@ penguins |>
 library(ggdensity)
 
 penguins |>
-  ggplot(aes(x = culmen_length_mm, y = culmen_depth_mm, colour = species)) +
+  ggplot(aes(x = bill_length_mm, y = flipper_length_mm, colour = species)) +
   geom_point(alpha = .2) +
   geom_hdr_lines() +
   scale_colour_manual(values = pal)
@@ -63,7 +64,7 @@ penguins |>
 library(ggridges)
 
 penguins |>
-  ggplot(aes(x = culmen_length_mm, y = species, fill = species)) +
+  ggplot(aes(x = bill_length_mm, y = species, fill = species)) +
   geom_density_ridges() +
   scale_fill_manual(values = pal) +
   scale_colour_manual(values = pal) +

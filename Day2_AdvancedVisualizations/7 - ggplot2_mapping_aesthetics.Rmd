@@ -77,7 +77,7 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
 ---
 
 ## 2. Custom Colors
-
+!["color code hex"](../images/visibone_hextable.gif)
 !["color code hex"](../images/color-codes.png)
 ```{r custom-colors}
 pal <- c("Adelie" = "#FF8C00", "Chinstrap" = "#A034F0", "Gentoo" = "#159090")

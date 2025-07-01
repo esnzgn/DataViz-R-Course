@@ -86,3 +86,36 @@ ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g)) +
 ```{r, eval=FALSE}
 ggsave("penguins_custom_image_plot.png", width = 8, height = 5)
 ```
+
+```{r}
+library(ggrepel)
+
+ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_image(aes(image = image, alpha = 0.5), size = 0.05) +  # Transparent image
+  geom_text_repel(aes(label = species, color = species), size = 3, max.overlaps = 10) +
+  scale_alpha_identity() +  # This ensures alpha is not scaled to a legend
+  scale_color_manual(
+    values = c("Adelie" = "#FF8C00", "Gentoo" = "#159090", "Chinstrap" = "#A034F0"),
+    name = "Species"
+  ) +
+  guides(
+    color = guide_legend(override.aes = list(size = 4)),
+    alpha = "none"  # Hide alpha from legend
+  ) +
+  labs(
+    title = "Penguins: Body Mass vs Flipper Length",
+    x = "Flipper Length (mm)",
+    y = "Body Mass (g)"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.grid.major = element_line(color = "gray90"),
+    panel.grid.minor = element_line(color = "gray95"),
+    axis.text = element_text(color = "black"),
+    axis.title = element_text(color = "black"),
+    plot.title = element_text(face = "bold")
+  )
+```
+
