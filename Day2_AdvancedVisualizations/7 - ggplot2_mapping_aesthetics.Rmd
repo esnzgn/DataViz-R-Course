@@ -40,7 +40,7 @@ unique(penguins_clean$species)
 write_csv(penguins_clean, file = "../data/cleaned_2_ver_penguine.csv")
 colnames(penguins_clean)
 peng_clean <- read_csv("../data/cleaned_2_ver_penguine.csv")
-colnames(peng_clean)
+head(peng_clean)
 ```
 
 ## Introduction
@@ -221,3 +221,18 @@ https://rstudio.github.io/cheatsheets/data-visualization.pdf
 !["ggplot cheatSheet 2"](../images/ggplot2_cheat_sheet_2.jpg)
 for more
 https://clauswilke.com/dataviz/
+
+```{r}
+# p1 <-  x = bill_length vs y = body mass, color = species
+p1 <- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g, color = species)) +
+  geom_point() + scale_color_manual(values = pal) + theme_minimal()
+
+# p2 <-  x = species,  fill = species
+p2 <- ggplot(penguins, aes(x = species, fill = species)) +
+  geom_bar() + scale_fill_manual(values = pal) + theme_minimal()
+
+# p1 + p2
+p1 + p2
+
+```
+

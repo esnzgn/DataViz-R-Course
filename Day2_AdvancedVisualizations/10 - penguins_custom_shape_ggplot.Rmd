@@ -41,6 +41,8 @@ penguins_img <- penguins_clean |>
     species == "Chinstrap" ~ "./img/chinstrap.png",
     species == "Gentoo" ~ "./img/gentoo.png"
   ))
+
+penguins_img
 ```
 
 ### Step 3: Create the Plot Using ggimage
