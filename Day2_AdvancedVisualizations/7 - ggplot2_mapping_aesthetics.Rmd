@@ -22,7 +22,16 @@ library(janitor)
 penguins_clean <- palmerpenguins::penguins_raw %>% 
   clean_names() %>% 
   tibble()
-penguins_clean
+
+penguins_clean <- penguins_clean %>% 
+  mutate(species = case_when(
+    species == "Adelie Penguin (Pygoscelis adeliae)" ~ "Adelie",
+    species == "Gentoo penguin (Pygoscelis papua)" ~ "Gentoo",
+    species == "Chinstrap penguin (Pygoscelis antarctica)" ~ "Chinstrap",
+    TRUE ~ species
+  ))
+
+unique(penguins_clean$species)
 ```
 
 ## Introduction
