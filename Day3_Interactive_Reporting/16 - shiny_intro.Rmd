@@ -14,7 +14,7 @@ library(plotly)
 ```
 
 # 🧠 Introduction
-
+!["shiny structure"](../images/shiny_architecture.png)
 **Shiny** is an R package that makes it easy to build **interactive web applications** straight from R. It is especially powerful for building data dashboards, exploratory tools, and teaching applications.
 
 ---
