@@ -60,10 +60,11 @@ cowplot_plot
 ## 💾 Save with ggsave in Different Formats and DPI
 
 ```{r save-ggsave, eval=FALSE}
+address_output <- "../../DataViz-R-Course_highRes_img/"
 
-dir.create("../../DataViz-R-Course_highRes_img/", recursive = T, showWarnings = F)
+dir.create(address_output, recursive = T, showWarnings = F)
 # Save the patchwork plot as PNG
-ggsave("../../DataViz-R-Course_highRes_img/patchwork_plot.png", patchwork_plot, width = 8, height = 6, dpi = 300)
+ggsave(paste0(address_output, "patchwork_plot.png"), patchwork_plot, width = 8, height = 6, dpi = 300)
 
 # Save the cowplot version as PDF
 ggsave("../../DataViz-R-Course_highRes_img/cowplot_plot.pdf", cowplot_plot, width =18, height = 10)

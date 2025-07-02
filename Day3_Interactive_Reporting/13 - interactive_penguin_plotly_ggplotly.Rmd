@@ -74,8 +74,21 @@ p1 <- ggplotly(ggplot(penguins_clean, aes(x = flipper_length_mm, y = body_mass_g
   theme_minimal() +
   labs(title = "Bill Length vs Body Mass"))
 
-p1
+p2 <- ggplot(penguins, aes(x = bill_depth_mm, fill = species)) +
+  geom_density(alpha = 0.6) +
+  theme_minimal() +
+  labs(title = "Flipper Length Density")
 
+p3 <- ggplot(penguins_clean, aes(x = species, y = flipper_length_mm, fill = species)) +
+  geom_count(alpha = 0.6) +
+  labs(title = "Flipper Length Distribution by Species",
+       y = "Flipper Length (mm)",
+       x = "Species") +
+  theme_minimal()
+
+ggplotly(p1)
+ggplotly(p2)
+ggplotly(p3)
 ```
 
 ---
