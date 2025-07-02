@@ -99,7 +99,7 @@ ggplotly(p3)
 # Save a standalone HTML version
 htmlwidgets::saveWidget(
   widget = ggplotly(p1),
-  file = "interactive_penguin_plot.html"
+  file = paste0(address_output, "interactive_penguin_plot.html")
 )
 ```
 
