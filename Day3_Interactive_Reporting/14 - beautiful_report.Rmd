@@ -12,16 +12,17 @@ output:
     number_sections: true
     latex_engine: xelatex
     keep_tex: true
-fontsize: 11pt
+fontsize: 8pt
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE, warning = FALSE, message = FALSE, 
-  fig.align = "center", fig.width = 6, fig.height = 4, dpi = 300
+  fig.align = "center", fig.width = 4, fig.height = 3, dpi = 300
 )
 library(tidyverse)
 library(palmerpenguins)
+library(plotly)
 ```
 
 # 📘 Introduction
@@ -51,7 +52,7 @@ penguins |>
 ## 📊 Include a Plot
 
 ```{r penguin-plot}
-ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
+p <- ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
   geom_density(alpha = 0.6) +
   theme_minimal() +
   labs(
@@ -59,6 +60,8 @@ ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
     x = "Flipper Length (mm)",
     fill = "Species"
   )
+
+ggplotly(p)
 ```
 
 ---
