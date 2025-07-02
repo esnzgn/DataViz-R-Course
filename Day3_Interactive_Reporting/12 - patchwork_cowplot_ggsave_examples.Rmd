@@ -17,12 +17,23 @@ library(tidyverse)
 ## 📊 Create Example Plots
 
 ```{r}
+source("../peng_data_prep.R")
 p1 <- ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_boxplot() +
   theme_minimal() +
   labs(title = "Bill Length by Species")
 
 p2 <- ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
+  geom_density(alpha = 0.6) +
+  theme_minimal() +
+  labs(title = "Flipper Length Density")
+
+p3 <- ggplot(penguins, aes(x = bill_depth_mm, fill = species)) +
+  geom_density(alpha = 0.6) +
+  theme_minimal() +
+  labs(title = "Flipper Length Density")
+
+p4 <- ggplot(penguins_clean, aes(x = culmen_length_mm, fill = species)) +
   geom_density(alpha = 0.6) +
   theme_minimal() +
   labs(title = "Flipper Length Density")
@@ -38,24 +49,27 @@ patchwork_plot
 
 ## 🐮 Combine with Cowplot
 
-
-
 ```{r}
-cowplot_plot <- plot_grid(p1, p2, labels = c("A", "B"), ncol = 1)
+label_plt <- c("A", "B"
+              ,"C", "D")
+
+cowplot_plot <- plot_grid(p1, p3, p2, p4, labels = label_plt, ncol = 2, nrow = 2)
 cowplot_plot
 ```
 
 ## 💾 Save with ggsave in Different Formats and DPI
 
 ```{r save-ggsave, eval=FALSE}
+
+dir.create("../../DataViz-R-Course_highRes_img/", recursive = T, showWarnings = F)
 # Save the patchwork plot as PNG
-ggsave("patchwork_plot.png", patchwork_plot, width = 8, height = 6, dpi = 300)
+ggsave("../../DataViz-R-Course_highRes_img/patchwork_plot.png", patchwork_plot, width = 8, height = 6, dpi = 300)
 
 # Save the cowplot version as PDF
-ggsave("cowplot_plot.pdf", cowplot_plot, width = 8, height = 10)
+ggsave("../../DataViz-R-Course_highRes_img/cowplot_plot.pdf", cowplot_plot, width =18, height = 10)
 
 # Save as JPEG with different DPI
-ggsave("patchwork_plot_highdpi.jpeg", patchwork_plot, width = 8, height = 6, dpi = 600)
+ggsave("../../DataViz-R-Course_highRes_img/patchwork_plot_highdpi.jpeg", patchwork_plot, width = 8, height = 6, dpi = 600)
 ```
 
 > 📁 Note: Make sure you run the code in an environment where you have write access to the working directory.
