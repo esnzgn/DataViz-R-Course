@@ -8,7 +8,6 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
-library(palmerpenguins)
 library(plotly)
 library(ggplot2)
 library(cowplot)
@@ -37,8 +36,8 @@ head(penguins_clean)
 
 ```{r plotly-scatter}
 plot_ly(data = penguins_clean,
-        x = penguins_clean$culmen_length_mm,
-        y = penguins_clean$body_mass_g,
+        x = ~culmen_length_mm,
+        y = ~body_mass_g,
         color = ~species,
         type = "scatter",
         mode = "markers",
