@@ -23,11 +23,11 @@ pal <- c("Adelie" = "#FF8C00", "Gentoo" = "#159090", "Chinstrap" = "#A034F0")
 ```{r raincloud}
 library(ggdist)
 
-penguins |>
-  ggplot(aes(x = species, y = flipper_length_mm, fill = species)) +
-  stat_halfeye(point_colour = NA, .width = 0, justification = -.2) +
-  geom_boxplot(outlier.shape = NA, alpha = .4, width = .1) +
-  stat_dots(aes(colour = species), side = "left", justification = 1.1, dotsize = .2, binwidth = .4) +
+p01 <- penguins |>
+  ggplot(aes(x = species, y = bill_length_mm, fill = species)) +
+  stat_halfeye(point_colour = NA, .width = 0, justification = -0.2) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.4, width = 0.1) +
+  stat_dots(aes(colour = species), side = "left", justification = 1.1, dotsize = 0.2, binwidth =   0.4) +
   scale_fill_manual(values = pal) +
   scale_colour_manual(values = pal) +
   guides(fill = "none") +
@@ -37,7 +37,7 @@ penguins |>
 # ggdist: Interval Plots
 
 ```{r interval}
-penguins |>
+p02 <- penguins |>
   drop_na(sex) |>
   ggplot(aes(x = species, y = bill_length_mm)) +
   stat_interval(.width = c(.5, .66, .95)) +
@@ -51,11 +51,30 @@ penguins |>
 ```{r density}
 library(ggdensity)
 
-penguins |>
-  ggplot(aes(x = bill_length_mm, y = flipper_length_mm, colour = species)) +
+p01 <- penguins |>
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm, colour = species)) +
   geom_point(alpha = .2) +
   geom_hdr_lines() +
   scale_colour_manual(values = pal)
+
+p02 <- penguins |>
+  ggplot(aes(x = body_mass_g, y = bill_depth_mm, colour = species)) +
+  geom_point(alpha = .2) +
+  geom_hdr_lines() +
+  scale_colour_manual(values = pal)
+
+p03 <- penguins |>
+  ggplot(aes(x = body_mass_g, y = bill_length_mm, colour = species)) +
+  geom_point(alpha = .2) +
+  geom_hdr_lines() +
+  scale_colour_manual(values = pal)
+```
+```{r}
+p01 / p02  / p03 
+# body_mass_g vs bill_length_mm
+# body_mass_g vs bill_length_mm
+# body_mass_g vs bill_length_mm
+
 ```
 
 # ggridges: Ridge Plots
@@ -63,12 +82,28 @@ penguins |>
 ```{r ridge}
 library(ggridges)
 
-penguins |>
+p1 <- penguins |>
+  ggplot(aes(x = flipper_length_mm, y = species, fill = species)) +
+  geom_density_ridges() +
+  scale_fill_manual(values = pal) +
+  scale_colour_manual(values = pal) +
+  theme(legend.position = "none")
+
+p2 <- penguins |>
+  ggplot(aes(x = bill_depth_mm, y = species, fill = species)) +
+  geom_density_ridges() +
+  scale_fill_manual(values = pal) +
+  scale_colour_manual(values = pal) +
+  theme(legend.position = "none")
+
+p3 <- penguins |>
   ggplot(aes(x = bill_length_mm, y = species, fill = species)) +
   geom_density_ridges() +
   scale_fill_manual(values = pal) +
   scale_colour_manual(values = pal) +
   theme(legend.position = "none")
+
+p1 / p2  / p3 
 ```
 
 # ggbump: Bump Charts
@@ -76,8 +111,12 @@ penguins |>
 ```{r bump}
 library(ggbump)
 library(lubridate)
+library(janitor)
 
-penguin_summary <- penguins |>
+penguins_clean <- palmerpenguins::penguins_raw %>% 
+  clean_names()
+
+penguin_summary <- penguins_clean |>
   mutate(date_egg = dmy(date_egg)) |>
   filter(clutch_completion == "Yes") |>
   mutate(year = year(date_egg)) |>
@@ -97,20 +136,7 @@ penguin_summary |>
   theme(legend.position = "none")
 ```
 
-# ggalt: Dumbbell Charts
 
-```{r dumbbell}
-library(ggalt)
-
-summary_counts <- penguins |>
-  group_by(sex, species) |>
-  summarise(mean = mean(body_mass_g, na.rm = TRUE), .groups = "drop") |>
-  pivot_wider(names_from = sex, values_from = mean)
-
-ggplot(summary_counts, aes(y = species, x = FEMALE, xend = MALE)) +
-  geom_dumbbell(size = 3, color = "#e3e2e1", colour_x = "#5b8124", colour_xend = "#bad744") +
-  labs(x = "Body mass (g)", y = "")
-```
 
 # ggh4x: Nested Facets
 

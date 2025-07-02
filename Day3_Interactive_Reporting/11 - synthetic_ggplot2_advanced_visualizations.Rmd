@@ -4,6 +4,61 @@ title: "Advanced Data Visualizations with Synthetic Data"
 output: html_document
 author: "Ehsan Zangene"
 ---
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(ggridges)
+library(patchwork)
+
+pal <- c("Adelie" = "#FF8C00", "Gentoo" = "#159090", "Chinstrap" = "#A034F0")
+
+# Shared theme
+base_theme <- theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid = element_blank()
+  )
+
+penguins_clean <- penguins |> drop_na(flipper_length_mm, bill_depth_mm, bill_length_mm)
+
+# Transparent ridge plots
+p1 <- penguins_clean |>
+  ggplot(aes(x = flipper_length_mm, y = species, fill = species)) +
+  geom_density_ridges(alpha = 0.5, scale = 1) +
+  scale_fill_manual(values = pal) +
+  labs(x = "Flipper Length (mm)", y = "") +
+  base_theme
+
+p2 <- penguins_clean |>
+  ggplot(aes(x = bill_depth_mm, y = species, fill = species)) +
+  geom_density_ridges(alpha = 0.5, scale = 1) +
+  scale_fill_manual(values = pal) +
+  labs(x = "Bill Depth (mm)", y = "Species") +
+  base_theme
+
+p3 <- penguins_clean |>
+  ggplot(aes(x = bill_length_mm, y = species, fill = species)) +
+  geom_density_ridges(alpha = 0.5, scale = 1) +
+  scale_fill_manual(values = pal) +
+  labs(x = "Bill Length (mm)", y = "") +
+  base_theme
+
+# Final patchwork
+combined_plot <- (p1 / p2 / p3) +
+  plot_layout(guides = "collect") +
+  plot_annotation(
+    tag_levels = 'a',
+    theme = theme(
+      plot.background = element_rect(color = "grey60", fill = NA, linewidth = 1, linetype = "solid"),
+      plot.tag = element_text(size = 14, face = "bold"),
+      plot.margin = margin(15, 15, 15, 15)
+    )
+  )
+
+combined_plot
+
+
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

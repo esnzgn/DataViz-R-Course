@@ -46,6 +46,8 @@ head(peng_clean)
 ## Introduction
 
 !["ggplot schematic"](../images/ggplot2_simplified.png)
+
+
 ```{r}
 library(tibble)
 

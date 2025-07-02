@@ -1,0 +1,61 @@
+
+---
+title: "Combining Plots and Exporting with Patchwork, Cowplot, and ggsave"
+author: "Ehsan Zangene"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(ggplot2)
+library(patchwork)
+library(cowplot)
+library(palmerpenguins)
+library(tidyverse)
+```
+
+## 📊 Create Example Plots
+
+```{r}
+p1 <- ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Bill Length by Species")
+
+p2 <- ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
+  geom_density(alpha = 0.6) +
+  theme_minimal() +
+  labs(title = "Flipper Length Density")
+```
+
+## 🔗 Combine with Patchwork
+
+```{r}
+patchwork_plot <- p1 / p2 + 
+  plot_annotation(tag_levels = "A")
+patchwork_plot
+```
+
+## 🐮 Combine with Cowplot
+
+
+
+```{r}
+cowplot_plot <- plot_grid(p1, p2, labels = c("A", "B"), ncol = 1)
+cowplot_plot
+```
+
+## 💾 Save with ggsave in Different Formats and DPI
+
+```{r save-ggsave, eval=FALSE}
+# Save the patchwork plot as PNG
+ggsave("patchwork_plot.png", patchwork_plot, width = 8, height = 6, dpi = 300)
+
+# Save the cowplot version as PDF
+ggsave("cowplot_plot.pdf", cowplot_plot, width = 8, height = 10)
+
+# Save as JPEG with different DPI
+ggsave("patchwork_plot_highdpi.jpeg", patchwork_plot, width = 8, height = 6, dpi = 600)
+```
+
+> 📁 Note: Make sure you run the code in an environment where you have write access to the working directory.

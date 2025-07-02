@@ -1,0 +1,84 @@
+---
+title: "Beautiful R Markdown Report"
+author: "Ehsan Zangene"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cerulean
+    highlight: tango
+  pdf_document:
+    toc: true
+    number_sections: true
+    latex_engine: xelatex
+    keep_tex: true
+fontsize: 11pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE, 
+  fig.align = "center", fig.width = 6, fig.height = 4, dpi = 300
+)
+library(tidyverse)
+library(palmerpenguins)
+```
+
+# 📘 Introduction
+
+This R Markdown file demonstrates how to create aesthetically pleasing reports in both **HTML** and **PDF** formats using different chunk options and themes.
+
+---
+
+# 🛠️ Chunk Options for Knitting
+
+## 🔍 Showing results without showing code
+
+```{r no-code, echo=FALSE}
+summary(penguins)
+```
+
+## 🔧 Hide messages/warnings but show the code
+
+```{r suppress-messages}
+library(dplyr)
+penguins |> 
+  filter(!is.na(flipper_length_mm)) |> 
+  group_by(species) |> 
+  summarise(avg_flipper = mean(flipper_length_mm, na.rm = TRUE))
+```
+
+## 📊 Include a Plot
+
+```{r penguin-plot}
+ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
+  geom_density(alpha = 0.6) +
+  theme_minimal() +
+  labs(
+    title = "Flipper Length Density by Species",
+    x = "Flipper Length (mm)",
+    fill = "Species"
+  )
+```
+
+---
+
+# 🎨 Exporting the Report
+
+To knit into:
+- **HTML**: Click `Knit` > `Knit to HTML`.
+- **PDF**: Install TinyTeX with `tinytex::install_tinytex()` if not already installed, then `Knit to PDF`.
+
+---
+
+# 📌 Tips for Aesthetics
+
+- Use `theme_minimal()` or `theme_classic()` in plots.
+- Set chunk options like `fig.align = "center"`, `dpi = 300`, `fig.width`, and `fig.height` for better control.
+- Customize the YAML header with `theme`, `highlight`, and `toc`.
+
+---
+
+# ✅ Conclusion
+
+R Markdown helps combine code, analysis, and narrative seamlessly. The formatting options enhance the clarity and beauty of your reports.

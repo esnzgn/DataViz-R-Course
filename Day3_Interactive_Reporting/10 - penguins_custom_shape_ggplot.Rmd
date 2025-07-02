@@ -38,9 +38,9 @@ Ensure you have 3 PNG images (small icons) in an "img" directory in your R proje
 ```{r}
 penguins_img <- penguins_clean |> 
   mutate(image = case_when(
-    species == "Adelie" ~ paste0("./img/adelie","_2nd.png"),
-    species == "Chinstrap" ~ paste0("./img/chinstrap","_2nd.png"),
-    species == "Gentoo" ~ paste0("./img/gentoo","_2nd.png")
+    species == "Adelie" ~ paste0("./Untitled/adelie","_2nd.png"),
+    species == "Chinstrap" ~ paste0("./Untitled/chinstrap","_2nd.png"),
+    species == "Gentoo" ~ paste0("./Untitled/gentoo","_2nd.png")
   ))
 
 penguins_img
@@ -56,23 +56,6 @@ ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g)) +
     title = "Penguins: Body Mass vs Flipper Length",
     x = "Flipper Length (mm)",
     y = "Body Mass (g)"
-  )
-
-ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_image(aes(image = image), size = 0.05) +
-  labs(
-    title = "Penguins: Body Mass vs Flipper Length",
-    x = "Flipper Length (mm)",
-    y = "Body Mass (g)"
-  ) +
-  theme(
-    panel.background = element_rect(fill = "white", color = NA),
-    plot.background = element_rect(fill = "white", color = NA),
-    panel.grid.major = element_line(color = "gray90"),
-    panel.grid.minor = element_line(color = "gray95"),
-    axis.text = element_text(color = "black"),
-    axis.title = element_text(color = "black"),
-    plot.title = element_text(face = "bold")
   )
 
 ```
@@ -95,11 +78,11 @@ penguins_img %>%
   summarise(count = n(), mean_bil = mean(flipper_length_mm))
 
 ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
-  geom_point(aes(alpha = 0.6), size = 1) +  # Transparent image
-  geom_jitter() +
-  # geom_image(aes(image = image, alpha = 0.3), size = 0.1) +  # Transparent image
-  geom_text_repel(aes(label = species, color = species), size = 3, max.overlaps = 5) +
-  # geom_text(aes(label = species, color = species), size = 3, max.overlaps = 5) +
+  # geom_point(aes(alpha = 0.6), size = 1) +  # Transparent image
+  # geom_jitter() +
+  geom_image(aes(image = image), size = 0.05) +  # Transparent image
+  geom_text_repel(aes(label = species, color = species), size = 3, max.overlaps = 15) +
+  # geom_text(aes(label = species, color = species), size = 3, max.overlaps = 20) +
   scale_alpha_identity() +  # This ensures alpha is not scaled to a legend
   scale_color_manual(
     values = c("Adelie" = "#FF8C00", "Gentoo" = "#159090", "Chinstrap" = "#A034F0"),
