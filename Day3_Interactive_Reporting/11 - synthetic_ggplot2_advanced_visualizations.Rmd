@@ -78,6 +78,7 @@ library(ggdist)
 Raincloud plots combine a density plot, boxplot, raw data points, and any desired summary statistics.
 
 ```{r raincloud-plot}
+source("../peng_data_prep.R")
 penguins_raw <- clean_names(tibble(penguins_raw))
 penguins_raw |>
   ggplot(aes(x = species,
