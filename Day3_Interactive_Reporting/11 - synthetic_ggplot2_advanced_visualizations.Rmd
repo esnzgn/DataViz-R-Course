@@ -68,6 +68,7 @@ library(ggfortify)
 library(patchwork)
 library(reshape2)
 library(ggrepel)
+# BiocManager::install("ComplexHeatmap")
 library(ComplexHeatmap)
 library(ggplot2)
 library(palmerpenguins)
@@ -115,7 +116,7 @@ rownames(heatmap_data) <- paste0("Sample_", 1:100)
 
 # Convert to dataframe and plot heatmap
 heatmap_data_scaled <- scale(heatmap_data)
-heatmap(as.matrix(heatmap_data_scaled), col = viridis::viridis(100), 
+stats::heatmap(as.matrix(heatmap_data_scaled), col = viridis::viridis(100), 
         main = "Heatmap of Gene Expression")
 ```
 
