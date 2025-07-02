@@ -50,7 +50,7 @@ penguins_img
 
 ```{r}
 ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_image(aes(image = image), size = 0.05) +
+  geom_image(aes(image = image), size = 0.1) +
   theme_minimal() +
   labs(
     title = "Penguins: Body Mass vs Flipper Length",
@@ -68,7 +68,7 @@ ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g)) +
 ### Optional: Save as PNG or PDF
 
 ```{r, eval=FALSE}
-ggsave("penguins_custom_image_plot.png", width = 8, height = 5)
+ggsave("penguins_custom_image_plot.png", width = 8, height = 5, units = "cm" ,dpi = 300)
 ```
 
 ```{r}
@@ -78,10 +78,10 @@ penguins_img %>%
   summarise(count = n(), mean_bil = mean(flipper_length_mm))
 
 ggplot(penguins_img, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
-  # geom_point(aes(alpha = 0.6), size = 1) +  # Transparent image
+  geom_point(aes(alpha = 0.6), size = 1) +  # Transparent image
   # geom_jitter() +
-  geom_image(aes(image = image), size = 0.05) +  # Transparent image
-  geom_text_repel(aes(label = species, color = species), size = 3, max.overlaps = 15) +
+  # geom_image(aes(image = image), size = 0.05) +  # Transparent image
+  geom_text_repel(aes(label = species, color = species), size = 3, max.overlaps = 10) +
   # geom_text(aes(label = species, color = species), size = 3, max.overlaps = 20) +
   scale_alpha_identity() +  # This ensures alpha is not scaled to a legend
   scale_color_manual(

@@ -185,7 +185,7 @@ ggplot(manhattan_data, aes(x = Position, y = logp, color = Chromosome)) +
 # Modified Plot with threshold line and rotated x-axis labels
 ggplot(manhattan_data, aes(x = Position, y = logp, color = Chromosome)) +
   geom_point(alpha = 0.6) +
-  geom_hline(yintercept = -log10(0.05), color = "red", linetype = "dashed", size = 0.5) +
+  geom_hline(yintercept = -log10(0.05), color = "red", linetype = "dashed", size = 0.3) +
   facet_wrap(~Chromosome, scales = "free_x", nrow = 4) +
   theme_minimal() +
   labs(title = "Manhattan Plot", y = "-log10(P-value)") +
