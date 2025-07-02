@@ -1,0 +1,75 @@
+---
+title: "Synthetic Volcano Plot Example"
+author: "Ehsan Zangene"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    theme: readable
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(ggrepel)
+```
+
+## 1. Simulating Synthetic Differential Expression Data
+
+```{r simulate-data}
+set.seed(123)
+
+gene_data <- tibble(
+  gene = paste0("Gene", 1:1000),
+  log2FC = rnorm(1000, mean = 0, sd = 2),
+  pval = runif(1000, min = 0, max = 1)
+) |> 
+  mutate(
+    pval = ifelse(runif(1000) < 0.05, runif(1000, min = 0, max = 0.001), pval),
+    adj_pval = p.adjust(pval, method = "BH"),
+    sig = case_when(
+      adj_pval < 0.05 & log2FC > 1 ~ "Upregulated",
+      adj_pval < 0.05 & log2FC < -1 ~ "Downregulated",
+      TRUE ~ "Not Significant"
+    )
+  )
+```
+
+## 2. Basic Volcano Plot
+
+```{r volcano-plot}
+ggplot(gene_data, aes(x = log2FC, y = -log10(adj_pval), color = sig)) +
+  geom_point(alpha = 0.6, size = 1.5) +
+  geom_text_repel(
+    data = filter(gene_data, adj_pval < 0.01 & abs(log2FC) > 2),
+    aes(label = gene),
+    size = 3
+  ) +
+  scale_color_manual(
+    values = c("Upregulated" = "#E41A1C", "Downregulated" = "#377EB8", "Not Significant" = "grey")
+  ) +
+  labs(
+    title = "Synthetic Volcano Plot",
+    x = "log2 Fold Change",
+    y = "-log10 Adjusted P-value",
+    color = "Significance"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## 3. Exporting the Volcano Plot
+
+```{r export-volcano, eval=FALSE}
+ggsave("volcano_plot.png", width = 8, height = 6, dpi = 300)
+```
+
+## 4. Summary Table of Top Hits
+
+```{r top-table}
+gene_data |> 
+  filter(sig != "Not Significant") |> 
+  arrange(adj_pval) |> 
+  slice_head(n = 10)
+```
